@@ -2,7 +2,8 @@
 export MY_INSTALL_DIR=$HOME/.local
 mkdir -p $MY_INSTALL_DIR
 export PATH="$MY_INSTALL_DIR/bin:$PATH"
-
+ln -s /usr/bin/aclocal-1.16 /usr/bin/aclocal-1.14
+ln -s /usr/bin/automake-1.16 /usr/bin/automake-1.14
 current_path=$(pwd);
 
 function perror() {
@@ -56,21 +57,9 @@ function install_leveldb()
 
     pushd $lib_name;
     make;
-    if [ ! -d lib ]; then
-        mkdir lib;
-    fi
-    cd lib;
-    if [ ! -f libleveldb.a ]; then
-        ln -s ../out-static/libleveldb.a libleveldb.a
-    fi
 
-    check_lib_exist $lib_name;
-    if [ $? -eq 1 ]; then
-        perror "$lib_name install fail. please check compile error info."
-        exit 1;
-    fi
     rsync -avz  include/leveldb/ ~/.local/include/leveldb/
-    cp lib/libleveldb.a ~/.local/lib64/
+    cp out-static/libleveldb.a ~/.local/lib64/
     popd;
     echo "install $lib_name ok."
 }
@@ -139,9 +128,10 @@ function install_glog()
         # use system gflags
         ./configure CXXFLAGS=-fPIC --prefix=$(pwd);
     fi
-    make 
-    cp lib/libglog.a ~/.local/lib/
-    rsync -avz third_party/glog/include/glog/ ~/.local/include/glog/
+    automake --add-missing
+    make && make install
+    cp ./lib/libglog.a ~/.local/lib/
+    rsync -avz include/glog/ ~/.local/include/glog/
     popd 
     echo "install $lib_name ok."
 }
