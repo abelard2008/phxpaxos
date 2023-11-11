@@ -6,20 +6,20 @@ PHX_EXTLIB_PATH = $(PHX_LIB_PATH)/extlib
 
 NANOPBPATH=$(SRC_BASE_PATH)/third_party/nanopb/
 
-PROTOBUF_INCLUDE_PATH=$(SRC_BASE_PATH)/third_party/protobuf/include
-GRPC_INCLUDE_PATH=$(SRC_BASE_PATH)/third_party/grpc/include
-LEVELDB_INCLUDE_PATH=$(SRC_BASE_PATH)/third_party/leveldb/include
-GFLAGS_INCLUDE_PATH=$(SRC_BASE_PATH)/third_party/gflags/include
-GLOG_INCLUDE_PATH=$(SRC_BASE_PATH)/third_party/glog/include
+PROTOBUF_INCLUDE_PATH=/root/.local/include
+GRPC_INCLUDE_PATH=/root/.local/include/grpc
+LEVELDB_INCLUDE_PATH=/root/.local/include/leveldb
+GFLAGS_INCLUDE_PATH=/root/.local/include/gflags
+GLOG_INCLUDE_PATH=/root/.local/include/glog
 PHXPAXOS_INCLUDE_PATH=$(SRC_BASE_PATH)/include
 PHXPAXOS_PLUGIN_PATH=$(SRC_BASE_PATH)/plugin/include
 
-PROTOBUF_LIB_PATH=$(SRC_BASE_PATH)/third_party/protobuf/lib
-LEVELDB_LIB_PATH=$(SRC_BASE_PATH)/third_party/leveldb/lib
-GFLAGS_LIB_PATH=$(SRC_BASE_PATH)/third_party/gflags/lib
-GLOG_LIB_PATH=$(SRC_BASE_PATH)/third_party/glog/lib
-GRPC_LIBE_PATH=$(SRC_BASE_PATH)/third_party/grpc/lib
-OPEN_SSL_LIB_PATH=$(SRC_BASE_PATH)/third_party/openssl/lib
+PROTOBUF_LIB_PATH=/root/.local/lib64
+LEVELDB_LIB_PATH=/root/.local/lib64
+GFLAGS_LIB_PATH=/root/.local/lib64
+GLOG_LIB_PATH=/root/.local/lib64
+GRPC_LIBE_PATH=/root/.local/lib64
+#OPEN_SSL_LIB_PATH=/root/.local/third_party/openssl/lib
 PHXPAXOS_LIB_PATH=$(SRC_BASE_PATH)/lib
 
 ifeq ($(debug),y)
@@ -31,7 +31,7 @@ else
 endif
 
 CXX=g++
-CXXFLAGS+=-std=c++11 $(OPT)
+CXXFLAGS+=-std=c++14 $(OPT)
 CPPFLAGS+=-I$(SRC_BASE_PATH) -I$(PROTOBUF_INCLUDE_PATH) -I$(LEVELDB_INCLUDE_PATH)
 CPPFLAGS+=-I$(GFLAGS_INCLUDE_PATH) -I$(GLOG_INCLUDE_PATH)
 CPPFLAGS+=-Wall -fPIC -m64  -Wno-unused-local-typedefs
@@ -40,12 +40,13 @@ CPPFLAGS+=-Wall -fPIC -m64  -Wno-unused-local-typedefs
 #LDFLAGS+=-static
 LDFLAGS+=-L$(PHX_LIB_PATH) -L$(PROTOBUF_LIB_PATH) -L$(LEVELDB_LIB_PATH)
 LDFLAGS+=-L$(GFLAGS_LIB_PATH) -L$(GLOG_LIB_PATH) -L$(GRPC_LIBE_PATH) -L$(OPEN_SSL_LIB_PATH) -g
+#LDFLAGS+=-L$(GFLAGS_LIB_PATH) -L$(GLOG_LIB_PATH) -L$(GRPC_LIBE_PATH) -g
 LDFLAGS+=-Wl,--no-as-needed
 
 
 #=====================================================================================================
 
-PROTOC = $(SRC_BASE_PATH)/third_party/protobuf/bin/protoc
+PROTOC = /root/.local/bin/protoc
 PROTOS_PATH = .
 GRPC_CPP_PLUGIN = grpc_cpp_plugin
 GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
