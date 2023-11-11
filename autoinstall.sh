@@ -6,7 +6,7 @@ check_env_tools=$base_dir/tools/check_install.py
 src_dir=$base_dir/src_list
 
 function check_env(){
-	python $check_env_tools $base_dir
+	python3 $check_env_tools $base_dir
 	if [ $? -gt 0 ];
 	then
 		exit 1
@@ -14,7 +14,7 @@ function check_env(){
 }
 
 function create_makefile(){
-	python $make_file_tools $base_dir $1 
+	python3 $make_file_tools $base_dir $1 
 }
 
 function scandir(){
