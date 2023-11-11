@@ -69,7 +69,7 @@ function install_leveldb()
         perror "$lib_name install fail. please check compile error info."
         exit 1;
     fi
-    rsync -avz  third_party/leveldb/include/leveldb/ ~/.local/include/leveldb/
+    rsync -avz  include/leveldb/ ~/.local/include/leveldb/
     cp lib/libleveldb.a ~/.local/lib64/
     popd;
     echo "install $lib_name ok."
