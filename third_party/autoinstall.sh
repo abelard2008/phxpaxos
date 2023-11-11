@@ -1,4 +1,7 @@
 #!/bin/bash
+export MY_INSTALL_DIR=$HOME/.local
+mkdir -p $MY_INSTALL_DIR
+export PATH="$MY_INSTALL_DIR/bin:$PATH"
 
 current_path=$(pwd);
 
@@ -50,18 +53,8 @@ function check_lib_exist()
 function install_leveldb()
 {
     lib_name="leveldb";
-    check_dir_exist $lib_name;
 
-    # check if aready install.
-    check_lib_exist $lib_name;
-    if [ $? -eq 0 ]; then
-        psucc "$lib_name already installed."
-        return;
-    fi
-    # end check.
-
-    go_back;
-    cd $lib_name;
+    pushd $lib_name;
     make;
     if [ ! -d lib ]; then
         mkdir lib;
@@ -76,8 +69,10 @@ function install_leveldb()
         perror "$lib_name install fail. please check compile error info."
         exit 1;
     fi
-
-    psucc "install $lib_name ok."
+    rsync -avz  third_party/leveldb/include/leveldb/ ~/.local/include/leveldb/
+    cp lib/libleveldb.a ~/.local/lib64/
+    popd;
+    echo "install $lib_name ok."
 }
 
 function check_protobuf_installed()
@@ -134,18 +129,7 @@ function install_protobuf()
 function install_glog()
 {
     lib_name="glog";
-    check_dir_exist $lib_name;
-
-    # check if aready install.
-    check_lib_exist $lib_name;
-    if [ $? -eq 0 ]; then
-        psucc "$lib_name already installed."
-        return;
-    fi
-    # end check.
-
-    go_back;
-    cd $lib_name;
+    pushd $lib_name;
     ./autogen.sh
     exist_gflags_dir="../gflags";
     if [ -d $exist_gflags_dir ]; then
@@ -155,44 +139,31 @@ function install_glog()
         # use system gflags
         ./configure CXXFLAGS=-fPIC --prefix=$(pwd);
     fi
-    make && make install;
-
-    check_lib_exist $lib_name;
-    if [ $? -eq 1 ]; then
-        perror "$lib_name install fail. please check compile error info."
-        exit 1;
-    fi
-    psucc "install $lib_name ok."
+    make 
+    cp lib/libglog.a ~/.local/lib/
+    rsync -avz third_party/glog/include/glog/ ~/.local/include/glog/
+    popd 
+    echo "install $lib_name ok."
 }
 
-function install_gflags()
+function install_grpc()
 {
-    lib_name="gflags";
-    check_dir_exist $lib_name;
+    lib_name="grpc";
+    pushd $lib_name;
 
-    # check if aready install.
-    check_lib_exist $lib_name;
-    if [ $? -eq 0 ]; then
-        psucc "$lib_name already installed."
-        return;
-    fi
-    # end check.
-    go_back;
-    cd $lib_name;
-    CXXFLAGS=-fPIC cmake . -DCMAKE_INSTALL_PREFIX=$(pwd);
-    make && make install;
-
-    check_lib_exist $lib_name;
-    if [ $? -eq 1 ]; then
-        perror "$lib_name install fail. please check compile error info."
-        exit 1;
-    fi
-    psucc "install $lib_name ok."
+    mkdir -p cmake/build
+    pushd cmake/build
+    cmake -DgRPC_INSTALL=ON \
+	  -DgRPC_BUILD_TESTS=OFF \
+	  -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
+	  ../..
+    make -j `nproc --all` && make install
+    popd
+    echo "install $lib_name ok."
 }
 
-install_gflags;
+install_grpc;
 install_glog;
 install_leveldb;
-install_protobuf;
 
-psucc "all done."
+echo "all done."
