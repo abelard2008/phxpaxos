@@ -120,7 +120,6 @@ function install_glog()
     lib_name="glog";
     pushd $lib_name;
     ./autogen.sh
-    exist_gflags_dir="../gflags";
     if [ -d $exist_gflags_dir ]; then
         # use local gflags
         ./configure CXXFLAGS=-fPIC --prefix=$(pwd) --with-gflags=$exist_gflags_dir;
@@ -152,8 +151,24 @@ function install_grpc()
     echo "install $lib_name ok."
 }
 
+function install_googletest()
+{
+    lib_name="googletest";
+    pushd $lib_name;
+
+    mkdir -p cmake/build
+    pushd cmake/build
+    cmake -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR \
+	  ../..
+    make -j `nproc --all` && make install
+    popd
+    popd
+    echo "install $lib_name ok."
+}
+
 install_grpc;
 install_glog;
+install_googletest;
 install_leveldb;
 
 echo "all done."

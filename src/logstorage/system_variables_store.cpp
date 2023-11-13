@@ -20,7 +20,7 @@ See the AUTHORS file for names of contributors.
 */
 
 #include "system_variables_store.h"
-#include "db.h"
+#include "phx_db.h"
 
 namespace phxpaxos
 {

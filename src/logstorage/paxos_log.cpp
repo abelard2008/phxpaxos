@@ -20,7 +20,7 @@ See the AUTHORS file for names of contributors.
 */
 
 #include "paxos_log.h"
-#include "db.h"
+#include "phx_db.h"
 
 namespace phxpaxos
 {

@@ -19,7 +19,7 @@ permissions and limitations under the License.
 See the AUTHORS file for names of contributors. 
 */
 
-#include "db.h"
+#include "phx_db.h"
 #include "commdef.h"
 #include "utils_include.h"
 

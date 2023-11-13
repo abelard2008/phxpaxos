@@ -20,7 +20,7 @@ See the AUTHORS file for names of contributors.
 */
 
 #include <string>
-#include "db.h"
+#include "phx_db.h"
 #include "gmock/gmock.h"
 #include <sys/types.h>
 #include <sys/stat.h>

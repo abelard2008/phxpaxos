@@ -27,7 +27,7 @@ See the AUTHORS file for names of contributors.
 #include <unistd.h>
 #include "crc32.h"
 #include "comm_include.h"
-#include "db.h"
+#include "phx_db.h"
 #include "paxos_msg.pb.h"
 
 namespace phxpaxos
