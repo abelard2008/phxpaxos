@@ -1,3 +1,8 @@
+#编译准备
+1. OS：CentOS Linux release 8.2.2004 (Core)
+2. yum install tmux rsync cmake gcc-c++ git openssl-devel re2-devel automake
+ 
+
 This repository contains a C++ implementation of the Phxpaxos module.  
 
 See INSTALL for (generic) installation instructions for C++: basically

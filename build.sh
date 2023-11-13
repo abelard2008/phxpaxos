@@ -10,3 +10,11 @@ git submodule update --init --recursive
 
 make
 
+pushd plugin
+make
+popd plugin
+
+rsync -avz ./plugin/include/*.h ~/.local/include/phxpaxos_plugin/
+rsync -avz ./plugin/include/phxpaxos_plugin/*.h ~/.local/include/phxpaxos_plugin/
+rsync -avz ./lib/libphxpaxos*.a /root/.local/lib64/
+
