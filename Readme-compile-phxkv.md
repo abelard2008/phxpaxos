@@ -14,9 +14,3 @@
 
 7. mkdir cmake/build && cd cmake/build && cmake ../.. && make
 
- 
-
-This repository contains a C++ implementation of the Phxpaxos module.  
-
-See INSTALL for (generic) installation instructions for C++: basically
-   sh autoinstall.sh && make  && make install
