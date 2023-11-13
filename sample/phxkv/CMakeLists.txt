@@ -21,7 +21,7 @@ cmake_minimum_required(VERSION 3.8)
 
 project(HelloWorld C CXX)
 
-include(../cmake/common.cmake)
+include(./common.cmake)
 
 # Proto file
 get_filename_component(hw_proto "./phxkv.proto" ABSOLUTE)
