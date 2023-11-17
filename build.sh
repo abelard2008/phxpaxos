@@ -8,8 +8,7 @@ git submodule update --init --recursive
 ./autoinstall.sh
 #
 make && make install
-#
-make install
+
 pushd plugin
 make && make install
 popd
